@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "IamAuditorReadOnly",
+      "Effect": "Allow",
+      "Action": [
+        "sts:GetCallerIdentity",
+        "iam:GenerateCredentialReport",
+        "iam:GetCredentialReport",
+        "iam:ListUsers", "iam:ListGroups", "iam:ListRoles",
+        "iam:ListGroupsForUser",
+        "iam:ListAttachedUserPolicies", "iam:ListAttachedGroupPolicies", "iam:ListAttachedRolePolicies",
+        "iam:ListUserPolicies", "iam:ListGroupPolicies", "iam:ListRolePolicies",
+        "iam:GetUserPolicy", "iam:GetGroupPolicy", "iam:GetRolePolicy",
+        "iam:GetRole", "iam:GetPolicy", "iam:GetPolicyVersion",
+        "iam:GenerateServiceLastAccessedDetails", "iam:GetServiceLastAccessedDetails",
+        "access-analyzer:ListAnalyzers", "access-analyzer:ListFindingsV2"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

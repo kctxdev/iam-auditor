@@ -1,0 +1,27 @@
+# Auditoria semanal de IAM. Copie para .github/workflows/iam-audit.yml
+# Requer uma role com a politica examples/auditor-readonly-policy.json e confianca OIDC com o GitHub.
+name: iam-audit
+on:
+  schedule: [{ cron: "0 9 * * 1" }]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AUDITOR_ROLE_ARN }}
+          aws-region: us-east-1
+      - run: pip install -r requirements.txt
+      - run: python -m iam_auditor --advisor --fail-on HIGH -o reports
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: iam-audit-report, path: reports/ }
